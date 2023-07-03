@@ -7,12 +7,17 @@
 body{
     background-color: #333;
     color: white;
-    height: 101vh;
+    height: 100%;
 }
 .title{
     font-size: 55px;
     background-color: black;
     color: white;
+}
+.titlecont{
+    font-size: 35px;
+    background-color: black;
+    color: orange;
 }
 
 .comenzar{
@@ -66,6 +71,41 @@ body{
 
 .list-group{
     font-size: 40px;
-    width: 70%;
-    margin-left: 80px;
+    width: 100%;
+}
+.tabla{
+    padding: 0;
+}
+#hist{
+    height: 750px;
+    overflow: auto;
+}
+.histitle{
+    color: orange;
+}
+
+#valores{
+    max-width: 98%;
+    padding: 20px;
+}
+#input1{
+    display: block;
+    margin-top: 20px;
+    margin-left: 25%;
+    height: 40px;
+    width: 50%;
+}
+#input2{
+    display: block;
+    margin-top: 20px;
+    margin-left: 25%;
+    height: 40px;
+    width: 50%;
+}
+#input3{
+    display: block;
+    margin-top: 20px;
+    margin-left: 25%;
+    height: 40px;
+    width: 50%;
 }

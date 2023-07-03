@@ -1,3 +1,8 @@
+fetch('https://api.currencylayer.com/live?access_key=3665d5911604746d7ab388d7e15c40b9&=AUD,EUR,GBP,PLN')
+    .then( (resp) => resp.json())
+    .then((data) => {
+        console.log(data)
+    })
 
 //Cotizaciones de monedas
 
@@ -16,64 +21,229 @@ const valores = [
 let ars = "$Ars";
 
 
+
 //boton de comenzar
 
 let calculadora = document.getElementById("calculadora");
+let valoresdiv = document.getElementById("valores")
 
-calculadora.remove()
+
+calculadora.remove();
+valoresdiv.remove();
+
 
 let btnComenzar = document.getElementById("btnComenzar")
 
 btnComenzar.onclick = () => {
+    Swal.fire({
+        title: 'Registrarse',
+        icon: 'info',
+        html: `
+        <input type="text" id="input1" placeholder="Ingrese su nombre" />
+        <input type="text" id="input2" placeholder="Ingrese su apellido" />
+        `,
+        confirmButtonText: 'Enviar',
+        preConfirm: () => {
+            return [
+            document.getElementById('input1').value,
+            document.getElementById('input2').value,
+            ]
+        }}).then((result) => {
+        if (result.isConfirmed) {
+        var usuario = result.value;
+        
+        let usuarioDatos = {
+            nombre:  usuario[0],
+            apellido:  usuario[1],
+        };
+        let usuarioJSON = JSON.stringify(usuarioDatos)
+        sessionStorage.setItem("usuarioDatos" , usuarioJSON);
+        title.append("Bienvenido " + usuarioDatos.nombre)
+        }
+        })
     btnComenzar.remove();
-    document.body.append(calculadora)
+
+    document.body.append(calculadora);
+    document.body.append(valoresdiv);
+
+        //usuario
+
+
+
+
+
+    //DOM elementos
+    
+    let title = document.getElementById("title")
+    let monto1 = document.getElementById("monto1")
+    let monto2 = document.getElementById("monto2")
+    
+
+    
+    let select = document.getElementById("inputGroupSelect01");
+    let select2 = document.getElementById("inputGroupSelect02");
+
+    let reset1 = document.getElementById("reset1");
+    let submit1 = document.getElementById("submit1");
+    
+    let reset2 = document.getElementById("reset2");
+    let submit2 = document.getElementById("submit2");
+    
+    let rtdo1 = document.getElementById("rtdo1");
+    let rtdo2 = document.getElementById("rtdo2");
+    
+    let histcont = document.getElementById("hist")
+    let historial = []
+    //
+    
+    
+    //ars-->extranjero
+    
+    
+    submit1.onclick = () => { 
+        
+        var montoValor = monto1.value;
+        var selectValor = select.value
+
+        let notification = Toastify({
+            text: "Calculo exitoso",
+            duration: 2000,
+            backgroundColor: "green",
+            }).showToast();
+        
+        if (selectValor == "Dolar"){
+            rtdo1.textContent = montoValor / monedas.dolar + "$ USD"
+            historial.push(montoValor / monedas.dolar + "$ USD");
+            notification
+        }else if (selectValor == "Euro"){
+            rtdo1.textContent =  montoValor / monedas.euro + "$ EUR";
+            historial.push(montoValor / monedas.euro + "$ EUR");
+            notification
+        }else if(selectValor == "Real"){
+            rtdo1.textContent =  montoValor / monedas.real + "$ BRL";
+            historial.push(montoValor / monedas.real + "$ BRL");
+            notification
+        }else if (selectValor == "Uruguay peso"){
+            rtdo1.textContent =  montoValor / monedas.uruguayo + "$ UYU";
+            historial.push(montoValor / monedas.uruguayo + "$ UYU");
+            notification
+        }else if (selectValor == "Boliviano"){
+            rtdo1.textContent =  montoValor / monedas.boliviano + "$ BOB";
+            historial.push(montoValor / monedas.boliviano + "$ BOB");
+            notification
+        }else if (selectValor == "Colombia peso"){
+            rtdo1.textContent =  montoValor / monedas.colombiano + "$ COP";
+            historial.push(montoValor / monedas.colombiano + "$ COP");
+            notification
+        }else if (selectValor == "Chile peso"){
+            rtdo1.textContent =  montoValor / monedas.chileno + "$ CLP";
+            historial.push(montoValor / monedas.chileno + "$ CLP");
+            notification
+        }else if (selectValor == "Yen"){
+            rtdo1.textContent =  montoValor / monedas.yen + "$ JPY";
+            historial.push(montoValor / monedas.yen + "$ JPY");
+            notification
+        }else{
+            alert("Faltan datos ")
+        }
+        
+        histcont.textContent = " "
+        
+        historial.forEach(function(Actividad) {
+            histcont.innerHTML += `<h3> ${Actividad} </h3> `
+        }
+        )
+        
+    }
+
+    reset1.onclick = () => {
+        monto1.value = "" ;
+        select.value = "Elija" ;
+        rtdo1.textContent = "Resultado" ;
+        Toastify({
+            text: "Reseteo exitoso",
+            duration: 2000,
+            backgroundColor: "red",
+            }).showToast();
+    }
+
+
+    //
+
+    //extranjero --> ars
+
+    submit2.onclick = () => { 
+
+        var montoValor = monto2.value;
+        var selectValor = select2.value
+
+        let notification2 = Toastify({
+            text: "Calculo exitoso",
+            duration: 2000,
+            backgroundColor: "green",
+            }).showToast();
+
+        if (selectValor == "Dolar"){
+            rtdo2.textContent =  montoValor * monedas.dolar + "$ ARS" ;
+            historial.push(montoValor * monedas.dolar + "$ ARS");
+            notification2
+        }else if (selectValor == "Euro"){
+            rtdo2.textContent =  montoValor * monedas.euro + "$ ARS" ;
+            historial.push(montoValor * monedas.euro + "$ ARS");
+            notification2
+        }else if(selectValor == "Real"){
+            rtdo2.textContent =  montoValor * monedas.real + "$ ARS";
+            historial.push(montoValor * monedas.real + "$ ARS");
+            notification2
+        }else if (selectValor == "Uruguayo"){
+            rtdo2.textContent =  montoValor * monedas.uruguayo + "$ ARS";
+            historial.push(montoValor * monedas.uruguayo + "$ ARS");
+            notification2
+        }else if (selectValor == "Boliviano"){
+            rtdo2.textContent =  montoValor * monedas.boliviano + "$ ARS";
+            historial.push(montoValor * monedas.boliviano + "$ ARS");
+            notification2
+        }else if (selectValor == "Colombiano"){
+            rtdo2.textContent =  montoValor * monedas.colombiano + "$ ARS";
+            historial.push(montoValor * monedas.colombiano + "$ ARS");
+            notification2
+        }else if (selectValor == "Chileno"){
+            rtdo2.textContent =  montoValor * monedas.chileno + "$ ARS";
+            historial.push(montoValor * monedas.chileno + "$ ARS");
+            notification2
+        }else if (selectValor == "Yen"){
+            rtdo2.textContent =  montoValor * monedas.yen + "$ ARS";
+            historial.push(montoValor * monedas.yen + "$ ARS");
+            notification2
+        }else{
+            alert("Faltan datos")
+        }
+        histcont.textContent = " "
+        
+        historial.forEach(function(Actividad) {
+            histcont.innerHTML += `<h3> ${Actividad} </h3> `
+        }
+        )
+    }
+
+    reset2.onclick = () => {
+        monto2.value = "" ;
+        select2.value = "Elija" ;
+        rtdo2.textContent = "Resultado" ;
+        Toastify({
+            text: "Reseteo exitoso",
+            duration: 2000,
+            backgroundColor: "red",
+        }).showToast();
+    }
+//
+
+
+
+
+
 }
 
 //
 
-//DOM elementos
 
-let monto1 = document.getElementById("monto1")
-let monto2 = document.getElementById("monto2")
-
-let options = {
-    dolar: document.getElementsByClassName("1"),
-    euro: document.getElementsByClassName("2"),
-    real: document.getElementsByClassName("3"),
-    uruguayo: document.getElementsByClassName("4"),
-    boliviano: document.getElementsByClassName("5"),
-    colombiano: document.getElementsByClassName("6"),
-    chileno: document.getElementsByClassName("7"),
-    yen: document.getElementsByClassName("8"),
-};
-
-let reset1 = document.getElementById("reset1");
-let submit1 = document.getElementById("submit1");
-
-let reset2 = document.getElementById("reset2");
-let submit2 = document.getElementById("submit2");
-
-let rtdo1 = document.getElementById("rtdo1");
-let rtdo2 = document.getElementById("rtdo2");
-
-//
-
-let $ = {
-    dolar: options.dolar = monedas.dolar,
-    euro: options.euro = monedas.euro,
-    real: options.real = monedas.real,
-    uruguayo: options.uruguayo = monedas.uruguayo,
-    boliviano: options.boliviano = monedas.boliviano,
-    colombiano: options.colombiano = monedas.colombiano,
-    chileno: options.chileno = monedas.chileno,
-    yen: options.yen = monedas.yen
-}
-
-
-//ars-->extranjero
-
-if (btnComenzar === null){
-    console.log("nulo")
-}else{
-    console.log("no es nulo")
-}
