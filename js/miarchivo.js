@@ -153,6 +153,7 @@ btnComenzar.onclick = () => {
         monto1.value = "" ;
         select.value = "Elija" ;
         rtdo1.textContent = "Resultado" ;
+        histcont.textContent = " ";
         Toastify({
             text: "Reseteo exitoso",
             duration: 2000,
@@ -223,6 +224,7 @@ btnComenzar.onclick = () => {
         monto2.value = "" ;
         select2.value = "Elija" ;
         rtdo2.textContent = "Resultado" ;
+        histcont.textContent = " ";
         Toastify({
             text: "Reseteo exitoso",
             duration: 2000,
