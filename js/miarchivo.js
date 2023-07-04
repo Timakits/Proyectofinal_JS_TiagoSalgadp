@@ -1,8 +1,3 @@
-fetch('https://api.currencylayer.com/live?access_key=3665d5911604746d7ab388d7e15c40b9&=AUD,EUR,GBP,PLN')
-    .then( (resp) => resp.json())
-    .then((data) => {
-        console.log(data)
-    })
 
 //Cotizaciones de monedas
 
@@ -28,8 +23,10 @@ let calculadora = document.getElementById("calculadora");
 let valoresdiv = document.getElementById("valores")
 
 
+
 calculadora.remove();
 valoresdiv.remove();
+
 
 
 let btnComenzar = document.getElementById("btnComenzar")
@@ -58,19 +55,13 @@ btnComenzar.onclick = () => {
         };
         let usuarioJSON = JSON.stringify(usuarioDatos)
         sessionStorage.setItem("usuarioDatos" , usuarioJSON);
-        title.append("Bienvenido " + usuarioDatos.nombre)
+        title.append("Bienvenido " + usuarioDatos.nombre);
         }
         })
     btnComenzar.remove();
 
     document.body.append(calculadora);
     document.body.append(valoresdiv);
-
-        //usuario
-
-
-
-
 
     //DOM elementos
     
@@ -94,6 +85,8 @@ btnComenzar.onclick = () => {
     
     let histcont = document.getElementById("hist")
     let historial = []
+
+    let otrosV = document.getElementById("otrosV")
     //
     
     
@@ -238,9 +231,27 @@ btnComenzar.onclick = () => {
     }
 //
 
-
-
-
+otrosV.onclick = () => {
+    fetch('js/otrosV.json')
+    .then(response => response.json())
+    .then(data => {
+        var otrosVDatos = JSON.stringify(data)
+        var otrosVDatosParse = JSON.parse(otrosVDatos)
+        let {YuanesChinos, PesosDominicanos, LibrasEsterlinas, Soles, LirasTurcas, FrancosSuizos, CoronasSuecas} = otrosVDatosParse
+        Swal.fire({
+            position: 'top-end',
+            title: 'Divisas no incluidas',
+            html: `<br><h3>Yuanes chinos: ${YuanesChinos} </h3><br> 
+            <h3>Pesos dominicanos: ${PesosDominicanos} </h3><br>
+            <h3>Libras esterlinas: ${LibrasEsterlinas} </h3><br>
+            <h3>Soles: ${Soles} </h3><br>
+            <h3>Liras turcas: ${LirasTurcas} </h3><br>
+            <h3>Francos suizos: ${FrancosSuizos} </h3><br>
+            <h3>Coronas suecas: ${CoronasSuecas} </h3><br>`,
+            showConfirmButton: true,
+        })
+    })
+}
 
 }
 
